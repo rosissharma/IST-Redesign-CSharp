@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/themes/jquery-ui.css")
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/themes/theme.css")
+    <style type="text/css">
+        .navbar-inverse {
+            background-color: #E87400 !important;
+            border: none;
+        }
+
+        a.mynav {
+            background-color: #E87400 !important;
+            border: none;
+        }
+
+        .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+            color: #ffffff;
+            border: none;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #FFFFFF;
+            border: none;
+        }
+
+            .navbar-inverse .navbar-nav > li > a:hover,
+            .navbar-inverse .navbar-nav > li > a:focus {
+                color: #000000;
+                background-color: white;
+                border: 0px solid;
+                cursor: pointer;
+            }
+
+       
+
+    </style>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#about").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectAbout", "RITAPI")',
+                    type: "GET",
+                    success: function (message) {
+                        if (message) {
+                            console.log(message);
+                        }
+                        else {
+                            window.location = '@Url.Action("DisplayAbout", "RITAPI")';
+                        }
+                    },
+                    error: function (thrownError) {
+                        console.log(thrownError.statusText);
+
+                    }
+                });
+            });
+
+            $('#undergrad').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GetUnderGrad", "RITAPI")',
+                    type: "GET",
+                    success: function (message) {
+                        if (message) {
+                            console.log(message);
+                        }
+                        else {
+                            window.location = '@Url.Action("SelectedDegree", "RITAPI")';
+                        }
+                    },
+                    error: function (thrownError) {
+                        console.log(thrownError.statusText);
+
+                    }
+                });
+            });
+
+            $('#graduate').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GetGrad", "RITAPI")',
+                    type: "GET",
+                    success: function (message) {
+                        if (message) {
+                            console.log(message);
+                        }
+                        else {
+                            window.location = '@Url.Action("SelectedDegree", "RITAPI")';
+                        }
+                    },
+                    error: function (thrownError) {
+                        console.log(thrownError.statusText);
+
+                    }
+                });
+            });
+
+            $("#employment").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectEmployment", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("Employment", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $("#minors").click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectMinors", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("Minors", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $('#employMap').click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectLocation", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("Map", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $('#faculty').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GetFaculty", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("People", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $('#staff').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GetStaff", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("People", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $('#research').click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectResearch", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("Research", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $('#resources').click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectResources", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("Resources", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $('#contact').click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectContact", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("Contact", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+            $('#news').click(function () {
+                $.ajax({
+                    url: '@Url.Action("SelectNews", "RITAPI")',
+                    type: "GET",
+                    success: function () {
+                        window.location = '@Url.Action("News", "RITAPI")';
+                    },
+                    error: function () {
+                        console.log(thrownError.statusText);
+                    }
+                })
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Rosis Sharma", "Index", "RITAPI", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "RITAPI")</li>
+                    <li><a id="about">About</a></li>
+                    <li><a id="undergrad">Undergraduate</a></li>
+                    <li><a id="graduate">Graduate</a></li>
+                    <li><a id="minors">Minors</a></li>
+                    <li><a id="faculty">Faculty</a></li>
+                    <li><a id="staff">Staff</a></li>
+                    <li><a id="employMap">Map</a></li>
+                    <li>@Html.ActionLink("Contact", "Contact", "RITAPI")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content containedFooter">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Rosis Sharma</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.js")
+    @Scripts.Render("~/Scripts/bootstrap.js")
+    @Scripts.Render("~/Scripts/respond.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

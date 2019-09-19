@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.title = "Map";
+}
+
+@using System.Data;
+@using System.Web.UI.WebControls;
+@using System.Web.Script.Serialization;
+@{
+    JavaScriptSerializer javaSerial = new JavaScriptSerializer();
+    if (Session["returnedJSON"] == null)
+    {
+        return;
+    }
+    var locationData = Session["returnedJSON"].ToString();
+
+}
+<style>
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+</style>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<script type="text/javascript">
+
+    var locationJSON;
+    var map;
+
+    // Used to initialize the google maps api when the window loads
+    function init() {
+        initMap();
+        createMarkers(locationJSON);
+    }
+
+    // Gets location data when document loads
+    $(document).ready(function () {
+        var locations = @Html.Raw(javaSerial.Serialize(locationData));
+        locationJSON = JSON.parse(locations);
+    });
+
+    // Intializes the Google API Map
+    function initMap() {
+
+        // Coordinates of the center of the continental US
+        var UScenter = { lat: 39.8283, lng: -98.5795}; //LOOK UP GEOGRAPHIC CENTER OF US AND PLACE BETWEEN CURLY BRACKETS
+
+        // Creates a new Google Map obj
+        map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 4, center: UScenter });
+
+        // Creates a new marker on the map
+        var marker = new google.maps.Marker({ position: UScenter, map: map })
+
+        marker.setMap(map);
+    }
+
+    // Used to create markers for the Google Map
+    function createMarkers(locationData) {
+
+        // Loops through all the locations from the API data and creates a markers based on the given coordinates
+        for (var i = 0; i < locationData.length; i++) {
+
+            // Creates a coordinate object
+            var coords = { lat: parseFloat(locationData[i].latitude), lng: parseFloat(locationData[i].longitude) };
+
+            // Creates a marker based on the coordinate data
+            var marker = new google.maps.Marker({ position: coords, map: map });
+
+            marker.setMap(map);
+        }
+    }
+
+    window.onload = init;
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-qMBog5Jnwo4p05AqTstyd6zLwq9Su9c&callback=initMap" async defer></script>
+<br />
+<h1>A map of where students work!</h1>
+<br />
+<div id="map" style="height:700px; width:100%;"></div>

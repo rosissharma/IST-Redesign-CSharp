@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.title = "AboutInfo";
+}
+
+@using System.Data;
+@using System.Web.UI.WebControls;
+@using System.Web.Script.Serialization;
+@{
+    JavaScriptSerializer javaSerial = new JavaScriptSerializer();
+    if (Session["returnedJSON"] == null)
+    {
+        return;
+    }
+    var aboutInfo = Session["returnedJSON"].ToString();
+
+}
+<style type="text/css">
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 60px;
+    }
+
+    .quot {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .desc {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+    // Gets data from API when document is ready
+    $(document).ready(function () {
+        var about = @Html.Raw(javaSerial.Serialize(aboutInfo));
+        var jsonAbout = JSON.parse(about);
+
+        // Creates a paragraph for each element in the API
+        $('#desc').append('<i><p class="desc">"' + jsonAbout.title + '"<p><i>');
+        $('#desc').append('<p class="quot">' + jsonAbout.description + '<p>');
+        $('#desc').append('<p class="quot">"' + jsonAbout.quote + '"<p>');
+        $('#desc').append('<p class="quot">~' + jsonAbout.quoteAuthor + '<p>');
+    });
+</script>
+
+<br />
+<h1>RIT ISTE Department</h1>
+<br />
+<div id="desc"></div>

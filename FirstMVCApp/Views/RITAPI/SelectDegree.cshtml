@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "SelectDegree";
+}
+
+@using System.Data;
+@using System.Web.UI.WebControls;
+@using System.Web.Script.Serialization;
+@{
+    // Gets the data from the session object and stores it in 'degrees'
+    JavaScriptSerializer javaSerial = new JavaScriptSerializer();
+    if (Session["returnedJSON"] == null)
+    {
+        return;
+    }
+    var degrees = Session["returnedJSON"].ToString();
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Gets the data from degrees
+        var dgree = @Html.Raw(javaSerial.Serialize(degrees));
+
+        // Converts data into usable JSON
+        var degreeJSON = JSON.parse(dgree);
+
+        $("#accordion").accordion({
+            collapsible: true,
+            heightStyle: "content"
+        });
+
+        if (degreeJSON.undergraduate) {
+            $('#h2ID').append('<span>Our Undergraduate Degree</span>');
+            $.each(degreeJSON.undergraduate, function (i, item) {
+                console.log($(this));
+                $('#hdr' + i).html("<p style='font-weight: bold; font-size: x-large;'>" + item.title + "</p><p style='font-weight: bold; font-size: large;'>" + item.description + '</p>');
+                var textString = "<ul style='font-style: italic;'>";
+                for (j = 0; j < item.concentrations.length; j++) {
+                    textString = textString + ("<li>" + item.concentrations[j] + "</li>");
+                }
+                textString = textString + "</ul>";
+                $('#div' + i).html(textString);
+            });
+        } else if (degreeJSON.graduate) {
+            $('#h2ID').append('<span>Our Graduate Degree</span>');
+            $.each(degreeJSON.graduate, function (i, item) {
+                console.log($(this));
+                $('#hdr' + i).html("<p style='font-weight: bold; font-size: x-large;'>" + item.title + "</p><p style='font-weight: bold; font-size: large;'>" + item.description + '</p>');
+                var textString = "<ul style='font-style: italic;'>";
+                for (j = 0; j < item.concentrations.length; j++) {
+                    textString = textString + ("<li>" + item.concentrations[j] + "</li>");
+                }
+                textString = textString + "</ul>";
+                $('#div' + i).html(textString);
+            });
+        }
+
+    });
+</script>
+
+<br />
+<h2 id="h2ID" style="text-align:center"></h2>
+<br />
+<div id="accordion">
+    <h3 id="hdr0"></h3>
+    <div id="div0"></div>
+    <h3 id="hdr1"></h3>
+    <div id="div1"></div>
+    <h3 id="hdr2"></h3>
+    <div id="div2"></div>
+</div>
+
+

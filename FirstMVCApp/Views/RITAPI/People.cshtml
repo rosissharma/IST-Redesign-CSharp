@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "People";
+}
+
+@using System.Data;
+@using System.Web.UI.WebControls;
+@using System.Web.Script.Serialization;
+@{
+    // Gets the data from the session object and stores it in 'peoples'
+    JavaScriptSerializer javaSerial = new JavaScriptSerializer();
+    if (Session["returnedJSON"] == null)
+    {
+        return;
+    }
+    var peoples = Session["returnedJSON"].ToString();
+}
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Gets the data from peoples
+        var people = @Html.Raw(javaSerial.Serialize(peoples));
+
+        // Converts data into usable JSON
+        var peopleJSON = JSON.parse(people);
+
+        if (peopleJSON.faculty) {
+            $('#h2ID').append('<span>Faculty Members</span>');
+            $.each(peopleJSON.faculty, function (i, item) {
+                $('#list').append("<img src='" + item.imagePath + "'style='max-width:150px; max-height:150px;'/>");
+                $('#list').append('<p>' + item.username + '</p>');
+                $('#list').append('<p>' + item.name + '</p>');
+                $('#list').append('<p>' + item.tagline + '</p>');
+                $('#list').append('<p>' + item.title + '</p>');
+                $('#list').append('<p>' + item.interestArea + '</p>');
+                $('#list').append('<p>' + item.office + '</p>');
+                $('#list').append('<p>' + item.website + '</p>');
+                $('#list').append('<p>' + item.phone + '</p>');
+                $('#list').append('<p>' + item.email + '</p>');
+                $('#list').append('<p>' + item.twitter + '</p>');
+                $('#list').append('<p>' + item.facebook + '</p>');
+            });
+        } else if (peopleJSON.staff) {
+            $('#h2ID').append('<span>Staff Members</span>');
+            $.each(peopleJSON.staff, function (i, item) {
+                $('#list').append("<img src='" + item.imagePath + "'style='max-width:150px; max-height:150px;'/>");
+                $('#list').append('<p>' + item.username + '</p>');
+                $('#list').append('<p>' + item.name + '</p>');
+                $('#list').append('<p>' + item.tagline + '</p>');
+                $('#list').append('<p>' + item.title + '</p>');
+                $('#list').append('<p>' + item.interestArea + '</p>');
+                $('#list').append('<p>' + item.office + '</p>');
+                $('#list').append('<p>' + item.website + '</p>');
+                $('#list').append('<p>' + item.phone + '</p>');
+                $('#list').append('<p>' + item.email + '</p>');
+                $('#list').append('<p>' + item.twitter + '</p>');
+                $('#list').append('<p>' + item.facebook + '</p>');
+            });
+        }
+    });
+</script>
+
+<br />
+<h2 id="h2ID" style="text-align:center"></h2>
+<br />
+<div class="col-md-3">
+   <div id="list"></div>
+</div>

@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Minors";
+}
+@using System.Data;
+@using System.Web.UI.WebControls;
+@using System.Web.Script.Serialization;
+@{
+    // Gets the data from the session object and stores it in 'degrees'
+    JavaScriptSerializer javaSerial = new JavaScriptSerializer();
+    if (Session["returnedJSON"] == null)
+    {
+        return;
+    }
+    var minors = Session["returnedJSON"].ToString();
+}
+
+<style>
+    .desc {
+        font-weight: lighter;
+        font-size: small;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Gets the data from degrees
+        var minor = @Html.Raw(javaSerial.Serialize(minors));
+
+        // Converts data into usable JSON
+        var minorJSON = JSON.parse(minor);
+
+        $("#accordion").accordion({
+            collapsible: true,
+            heightStyle: "content"
+        });
+
+        $.each(minorJSON.UgMinors, function (i, item) {
+                console.log($(this));
+            $('#hdr' + i).html("<p style='font-weight: bold; font-size: x-large;'>" + item.title + "</p><p class=desc>" + item.description + '</p>');
+                var textString = "<ul style='font-style: italic;'>";
+            for (j = 0; j < item.courses.length; j++) {
+                textString = textString + ("<li>" + item.courses[j] + "</li>");
+                }
+                textString = textString + "</ul>";
+                $('#div' + i).html(textString);
+            });
+    });
+</script>
+
+<br />
+<h2 style="text-align:center">Minors</h2>
+<br />
+<div id="accordion">
+    <h3 id="hdr0"></h3>
+    <div id="div0"></div>
+    <h3 id="hdr1"></h3>
+    <div id="div1"></div>
+    <h3 id="hdr2"></h3>
+    <div id="div2"></div>
+    <h3 id="hdr3"></h3>
+    <div id="div3"></div>
+    <h3 id="hdr4"></h3>
+    <div id="div4"></div>
+    <h3 id="hdr5"></h3>
+    <div id="div5"></div>
+    <h3 id="hdr6"></h3>
+    <div id="div6"></div>
+</div>
